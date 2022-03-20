@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="it-it">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale = 1.0,maximum-scale = 1.0">
+    <meta name="description"
+        content="Scopri quanto guadagnerai al netto di tasse in Italia con l'agevolazione Rientro di Cervelli">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- Primary Meta Tags -->
+    <meta name="title" content="Calcolatore Rientro di Cervelli - Stipendio netto">
+
+    <title>Calcolatore Rientro di Cervelli</title>
+    <link rel="icon" href="https://i.pinimg.com/originals/c6/ea/fa/c6eafacc17bdd88dbf8c909709dfc7df.png"
+        type="image/x-icon">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="cervelli.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="cervelli.js"></script>
+    <script src="calculator.js"></script>
+</head>
+
+<body>
+
+    <div class='container'>
+        <div id="header">
+            <h1>Calcolatore Tasse Rientro di Cervelli</h1>
+            <h2>Scopri qual è il tuo stipendio netto di tasse</h2>
+        </div>
+        <div id="form">
+            <form class="row g-3" id="submit-salary">
+                <div class="col-auto">
+                    <label for="ral">Inserisci il tuo stipendio lordo annuo</label>
+                    <input type="number" min="0" max="1000000000" class="form-control" id="ral" placeholder="RAL"
+                        value="65000">
+                </div>
+                <div class="col-auto">
+                    <label for="region">Dove lavori?</label>
+                    <select class="form-select" id="region">
+                        <option disabled selected>Regione</option>
+                        <!-- <option value="0.9">Abruzzo</option>
+                        <option value="0.9">Basilicata</option>
+                        <option value="0.9">Calabria</option>
+                        <option value="0.9">Campania</option>
+                        <option value="0.7">Emilia-Romagna</option>
+                        <option value="0.7">Friuli Venezia Giulia</option>
+                        <option value="0.7">Lazio</option>
+                        <option value="0.7">Liguria</option>
+                        <option value="0.7">Lombardia</option>
+                        <option value="0.7">Marche</option>
+                        <option value="0.9">Molise</option>
+                        <option value="0.7">Piemonte</option>
+                        <option value="0.9">Puglia</option>
+                        <option value="0.9">Sardegna</option>
+                        <option value="0.9" selected>Sicilia</option>
+                        <option value="0.7">Toscana</option>
+                        <option value="0.7">Trentino-Alto Adige</option>
+                        <option value="0.7">Umbria</option>
+                        <option value="0.7">Valle d'Aosta</option>
+                        <option value="0.7">Veneto</option> -->
+                    </select>
+                </div>
+                <div class="col-auto">
+                    <label for="comune">Seleziona comune di residenza</label>
+                    <select class="form-select" id="comune">
+                        <option disabled selected>Comune</option>
+
+                    </select>
+                </div>
+                <div class="col-auto align-self-end">
+                    <button type="submit" class="btn btn-primary mb-3">Calcola</button>
+                </div>
+            </form>
+        </div>
+        <div id="warningComune" style="display:none;">
+            <h3>Nessuna informazione per questo comune.<br>Inserisci coefficiente Irpef comunale o lascia il nostro
+                valore di default.</h3> <input class="form-control form-control-sm" style="width:70px;" type="text"
+                placeholder="0.009">
+        </div>
+    </div>
+
+    <div id="body">
+        <div class="container">
+            <table class="table table-hover" id="salary-result">
+                <thead>
+                    <tr>
+                        <th scope="col">Mensilità</th>
+                        <th scope="col">Senza agevolazione</th>
+                        <th scope="col">Con agevolazione</th>
+                        <th scope="col">Differenza</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th scope="row">12</th>
+                        <td><span id="standard12">-</span> €</td>
+                        <td><span id="rientro12">-</span> €</td>
+                        <td><span id="dif12">-</span> €</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">13</th>
+                        <td><span id="standard13">-</span> €</td>
+                        <td><span id="rientro13">-</span> €</td>
+                        <td><span id="dif13">-</span> €</td>
+                    </tr>
+                    <tr>
+                        <th scope="row">14</th>
+                        <td><span id="standard14">-</span> €</td>
+                        <td><span id="rientro14">-</span> €</td>
+                        <td><span id="dif14">-</span> €</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <table class="table" id="tax">
+                <thead>
+                    <tr>
+                        <th scope="col"></th>
+                        <th scope="col">Senza agevolazione</th>
+                        <th scope="col">Con agevolazione</th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>RAL</td>
+                        <td><span id="taxRalS">-</span> €</td>
+                        <td><span id="taxRalC">-</span> €</td>
+                    </tr>
+                    <tr>
+                        <td>INPS</td>
+                        <td><span id="taxInpsS">-</span> €</td>
+                        <td><span id="taxInpsC">-</span> €</td>
+                    </tr>
+                    <tr>
+                        <td>Imponibile IRPEF</td>
+                        <td><span id="imponibileIrpefS">-</span> €</td>
+                        <td><span id="imponibileIrpefC">-</span> €</td>
+                    </tr>
+                    <tr>
+                        <td>Totale IRPEF</td>
+                        <td><span id="irpefTotS">-</span> €</td>
+                        <td><span id="irpefTotC">-</span> €</td>
+
+                        <td>
+                            <button type="button" class="btn" id="btnIrpefInfo">
+                                Info +
+                            </button>
+                        </td>
+                    </tr>
+
+                    <tr class="collapsemeIrpef" style="display:none;">
+                        <td>IRPEF</td>
+                        <td><span id="taxIrpefS">-</span> €</td>
+                        <td><span id="taxIrpefC">-</span> €</td>
+                    </tr>
+                    <tr class="collapsemeIrpef" style="display:none;">
+                        <td>IRPEF Regionale</td>
+                        <td><span id="taxRegioneS">-</span> €</td>
+                        <td><span id="taxRegioneC">-</span> €</td>
+                    </tr>
+                    <tr class="collapsemeIrpef" style="display:none;">
+                        <td>IRPEF Comunale</td>
+                        <td><span id="taxComuneS">-</span> €</td>
+                        <td><span id="taxComuneC">-</span> €</td>
+                    </tr>
+                    <tr>
+                        <td>Detrazioni</td>
+                        <td><span id="DetrazioniTotS">-</span> €</td>
+                        <td><span id="DetrazioniTotC">-</span> €</td>
+                    </tr>
+                    <tr>
+                        <th>Netto annuale</th>
+                        <th><span id="nettoAnnualeS">-</span> €</th>
+                        <th><span id="nettoAnnualeC">-</span> €</th>
+                    </tr>
+                    <tr>
+                        <th>Totale tasse</th>
+                        <th><span id="tasseTotS">-</span> %</th>
+                        <th><span id="tasseTotC">-</span> %</th>
+                    </tr>
+                </tbody>
+            </table>
+
+            <table class="table" id="tax">
+
+                <tbody>
+                    <tr>
+                        <td colspan="3">Calcolo scaglioni Irpef</td>
+                        <td>Senza agevolazione</td>
+                        <td>Con agevolazione</td>
+                    </tr>
+                    <tr>
+                        <td>0 €</td>
+                        <td>15,000 €</td>
+                        <td>23%</td>
+                        <td><span id="irpefS0">-</span> €</td>
+                        <td><span id="irpefC0">-</span> €</td>
+                    </tr>
+                    <tr>
+                        <td>15,000 €</td>
+                        <td>28,000 €</td>
+                        <td>25%</td>
+                        <td><span id="irpefS1">-</span> €</td>
+                        <td><span id="irpefC1">-</span> €</td>
+                    </tr>
+                    <tr>
+                        <td>28,000 €</td>
+                        <td>50,000 €</td>
+                        <td>35%</td>
+                        <td><span id="irpefS2">-</span> €</td>
+                        <td><span id="irpefC2">-</span> €</td>
+                    </tr>
+                    <tr>
+                        <td>50,000 €</td>
+                        <td></td>
+                        <td>43%</td>
+                        <td><span id="irpefS3">-</span> €</td>
+                        <td><span id="irpefC3">-</span> €</td>
+                    </tr>
+                    <tr>
+                        <th colspan="3">Totale</th>
+                        <th><span id="TotIrpefS">-</span> €</th>
+                        <th><span id="TotIrpefC">-</span> €</th>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div id="discaimer">Ai fini della semplificazione alcune variabili sono state approssimate (come lo stato
+                civile e altre).
+                <br>Questo documento non rappresenta l'autorità legale e deve essere utilizzato solo a fini di
+                approssimazione.
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
