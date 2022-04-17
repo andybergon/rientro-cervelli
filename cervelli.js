@@ -1,24 +1,28 @@
 $(document).ready(submit);
 
-function submit() {    
+function submit() {  
+    $("#imponibileInfo").tooltip();  
     addRegionToOptions(regioniToComuni);
     addComuniToOptions(regioniToComuni);      
     addEditableRegionalIrpef(comuniToIrpef);
     $(document).on('submit', '#submit-salary', () => {
+        $("#dopo5anni").hide();
         render();
-        $( "#body").show('slow');
+        $("#body").show('slow');
         return false;
      });
      
 }
 function render() {
+    
     var ral = $('#ral').val();        
     var regione = $('#region').children("option:selected").text();
     var comune = $('#comune').children("option:selected").text();
+    let comuneDef = $('#customComune').val();
 
-    var standardSalary = calcolaNetto(ral, regione, comune, false);
+    var standardSalary = calcolaNetto(ral, regione, comune, false, comuneDef);
     console.log('standard '+standardSalary)
-    var rientroSalary = calcolaNetto(ral, regione, comune, true);
+    var rientroSalary = calcolaNetto(ral, regione, comune, true, comuneDef);
     console.log('rientro '+rientroSalary)
     $('#nettoAnnualeS').text(Math.round(standardSalary));
     $('#nettoAnnualeC').text(Math.round(rientroSalary));
@@ -32,13 +36,25 @@ function render() {
     $( "#body" ).hide();
     $("#btnIrpefInfo").unbind('click').bind('click',function() {
         $( ".collapsemeIrpef").toggle('slow');
+        $( "#btnIrpefInfo").toggleClass('border-left');
+        $( ".collapsemeIrpef").toggleClass('border-left');
+        $(this).find('i').toggleClass('fa-angle-down fa-angle-up')
     });
 }
 
+function valueChanged() {
+    if($("#flexCheckDefault").is(":checked")) {
+        $("#dopo5anni").show("slow");
+    } else {
+        $("#dopo5anni").hide("slow");
+    }
+}
 function fillTableTaxes (ral) {
     $('#taxRalS').text(ral);
     $('#taxRalC').text(ral);
     var regione = $('#region').children("option:selected").text();
+    var comune = $('#comune').children("option:selected").text();
+    let comuneDef = $('#customComune').val();
     let inps = calcolaInps(ral)
     $('#taxInpsS').text(Math.round(inps));
     $('#taxInpsC').text(Math.round(inps));
@@ -60,8 +76,8 @@ function fillTableTaxes (ral) {
     $('#taxRegioneS').text(Math.round(standardiIrpefRegione));
     $('#taxRegioneC').text(Math.round(rientroIrpefRegione));
 
-    let standardiIrpefComune = calcolaIrpefComune(biS, 'Catania');
-    let rientroIrpefComune = calcolaIrpefComune(biC, 'Catania');
+    let standardiIrpefComune = calcolaIrpefComune(biS, comune, comuneDef);
+    let rientroIrpefComune = calcolaIrpefComune(biC, comune, comuneDef);
     $('#taxComuneS').text(Math.round(standardiIrpefComune));
     $('#taxComuneC').text(Math.round(rientroIrpefComune));
 
@@ -84,9 +100,9 @@ function fillTableSalaries (std,rientro, mesi){
 }
 
 function fillTableSalary(std,rientro, mese) {
-    $('#standard'+mese).text(Math.round(std/mese));
-    $('#rientro'+mese).text(Math.round(rientro/mese));
-    $('#dif'+mese).text(Math.round((rientro-std)/mese));
+    $('.standard'+mese).text(Math.round(std/mese));
+    $('.rientro'+mese).text(Math.round(rientro/mese));
+    $('.dif'+mese).text(Math.round((rientro-std)/mese));
 }
 
 

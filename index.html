@@ -21,9 +21,19 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="cervelli.css">
+    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx"
+        crossorigin="anonymous"></script>
+
     <script src="cervelli.js"></script>
     <script src="calculator.js"></script>
+
 </head>
 
 <body>
@@ -38,7 +48,7 @@
                 <div class="col-auto">
                     <label for="ral">Inserisci il tuo stipendio lordo annuo</label>
                     <input type="number" min="0" max="1000000000" class="form-control" id="ral" placeholder="RAL"
-                        value="65000">
+                        value="40000">
                 </div>
                 <div class="col-auto">
                     <label for="region">Dove lavori?</label>
@@ -80,79 +90,157 @@
         </div>
         <div id="warningComune" style="display:none;">
             <h3>Nessuna informazione per questo comune.<br>Inserisci coefficiente Irpef comunale o lascia il nostro
-                valore di default.</h3> <input class="form-control form-control-sm" style="width:70px;" type="text"
-                placeholder="0.009">
+                valore di default (0.009).</h3> <input id="customComune" class="form-control form-control-sm" style="width:70px;" type="text"
+                placeholder="0.009" type="number" min="0" value="0.009" max="1">
         </div>
     </div>
 
     <div id="body">
         <div class="container">
-            <table class="table table-hover" id="salary-result">
-                <thead>
-                    <tr>
-                        <th scope="col">Mensilità</th>
-                        <th scope="col">Senza agevolazione</th>
-                        <th scope="col">Con agevolazione</th>
-                        <th scope="col">Differenza</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <th scope="row">12</th>
-                        <td><span id="standard12">-</span> €</td>
-                        <td><span id="rientro12">-</span> €</td>
-                        <td><span id="dif12">-</span> €</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">13</th>
-                        <td><span id="standard13">-</span> €</td>
-                        <td><span id="rientro13">-</span> €</td>
-                        <td><span id="dif13">-</span> €</td>
-                    </tr>
-                    <tr>
-                        <th scope="row">14</th>
-                        <td><span id="standard14">-</span> €</td>
-                        <td><span id="rientro14">-</span> €</td>
-                        <td><span id="dif14">-</span> €</td>
-                    </tr>
-                </tbody>
+            <p style="color:#191970;opacity: 0.9;">Stipendio netto per i primi 5 anni. <a href="https://www.agenziaentrate.gov.it/portale/web/guest/normativa-e-prassi2-cittadini">Leggi il Decreto</a></p>
+            
+            <table class="table nettoMesi mobile-hide" style="background-color:#deebf7; font-size: 13px; border-color:transparent;"
+                id="salary-result">
+                <tr>
+                    <td colspan="3" height="10"></td>
+                </tr>
+                <tr>
+                    <td style="padding-left: 20px;"><strong>12 mensilità</strong><br>
+                        Standard: <strong style="font-size: 16px;"><span class="standard12">-</span>&nbsp;€</strong> <br>
+                        Agevolato: <strong style="font-size: 16px;"><span class="rientro12">-</span>&nbsp;€</strong>
+                        <br><br>
+
+                        Differenza: <strong><span class="dif12">&nbsp;€</strong>
+                    </td>
+                    <td style="padding-left: 20px;border-left: 1px solid #191970;border-right: 1px solid #191970;
+                    "><strong>13 mensilità</strong><br>
+                        Standard: <strong style="font-size: 16px;"><span class="standard13">-</span>&nbsp;€</strong> <br>
+                        Agevolato: <strong style="font-size: 16px;"><span class="rientro13">-</span>&nbsp;€</strong>
+                        <br><br>
+
+                        Differenza: <strong><span class="dif13">&nbsp;€</strong>
+                    </td>
+                    <td style="padding-left: 20px;"><strong>14 mensilità</strong><br>
+                        Standard: <strong style="font-size: 16px;"><span class="standard14">-</span>&nbsp;€</strong> <br>
+                        Agevolato: <strong style="font-size: 16px;"><span class="rientro14">-</span>&nbsp;€</strong>
+                        <br><br>
+
+                        Differenza: <strong><span class="dif14">&nbsp;€</strong>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3" height="10"></td>
+                </tr>
             </table>
 
+            <div id="carouselExampleControls " class="carousel slide mobile-show" data-bs-ride="carousel">
+                <div class="carousel-inner" style="background-color:#deebf7; padding: 20px; border-color:transparent;">
+                    <div class="carousel-item active">
+                        <div><strong>12 mensilità</strong><br>
+                            Standard: <strong style="font-size: 16px;"><span class="standard14">-</span>&nbsp;€</strong> <br>
+                            Agevolato: <strong style="font-size: 16px;"><span class="rientro14">-</span>&nbsp;€</strong>
+                            <br><br>
+    
+                            Differenza: <strong><span class="dif14">&nbsp;€</strong></div>
+                    </div>
+                    <div class="carousel-item">
+                        <div><strong>13 mensilità</strong><br>
+                            Standard: <strong style="font-size: 16px;"><span class="standard14">-</span>&nbsp;€</strong> <br>
+                            Agevolato: <strong style="font-size: 16px;"><span class="rientro14">-</span>&nbsp;€</strong>
+                            <br><br>
+    
+                            Differenza: <strong><span class="dif14">&nbsp;€</strong></div>
+                    </div>
+                    <div class="carousel-item">
+                        <div><strong>14 mensilità</strong><br>
+                            Standard: <strong style="font-size: 16px;"><span class="standard14">-</span>&nbsp;€</strong> <br>
+                            Agevolato: <strong style="font-size: 16px;"><span class="rientro14">-</span>&nbsp;€</strong>
+                            <br><br>
+    
+                            Differenza: <strong><span class="dif14">&nbsp;€</strong></div>
+                    </div>
+                </div>
+            </div>
+
+            <div style="display: none;">
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" onchange="valueChanged()"/>
+                <label class="form-check-label" for="flexCheckDefault">
+                    <h6 style="color:#191970;opacity: 0.9;"> Mostra stipendio netto per i 5 anni successivi</h6>
+                </label>
+              </div>
+
+              <table class="table nettoMesi mobile-hide" id="dopo5anni" style="background-color:#deebf7; font-size: 13px; border-color:transparent;"
+                id="salary-result">
+                <tr>
+                    <td colspan="3" height="10"></td>
+                </tr>
+                <tr>
+                    <td style="padding-left: 20px;"><strong>12 mensilità</strong><br>
+                        Standard: <strong style="font-size: 16px;"><span class="standard12">-</span>&nbsp;€</strong> <br>
+                        Agevolato: <strong style="font-size: 16px;"><span class="rientro12">-</span>&nbsp;€</strong>
+                        <br><br>
+
+                        Differenza: <strong><span class="dif12">&nbsp;€</strong>
+                    </td>
+                    <td style="padding-left: 20px;border-left: 1px solid #191970;border-right: 1px solid #191970;
+                    "><strong>13 mensilità</strong><br>
+                        Standard: <strong style="font-size: 16px;"><span class="standard13">-</span>&nbsp;€</strong> <br>
+                        Agevolato: <strong style="font-size: 16px;"><span class="rientro13">-</span>&nbsp;€</strong>
+                        <br><br>
+
+                        Differenza: <strong><span class="dif13">&nbsp;€</strong>
+                    </td>
+                    <td style="padding-left: 20px;"><strong>14 mensilità</strong><br>
+                        Standard: <strong style="font-size: 16px;"><span class="standard14">-</span>&nbsp;€</strong> <br>
+                        Agevolato: <strong style="font-size: 16px;"><span class="rientro14">-</span>&nbsp;€</strong>
+                        <br><br>
+
+                        Differenza: <strong><span class="dif14">&nbsp;€</strong>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3" height="10"></td>
+                </tr>
+            </table>
+
+        </div>
             <table class="table" id="tax">
                 <thead>
                     <tr>
-                        <th scope="col"></th>
-                        <th scope="col">Senza agevolazione</th>
-                        <th scope="col">Con agevolazione</th>
-                        <th scope="col"></th>
+                        <td scope="col"></td>
+                        <td scope="col">Standard</td>
+                        <td scope="col">Agevolato</td>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td>RAL</td>
+                        <th>RAL</th>
                         <td><span id="taxRalS">-</span> €</td>
                         <td><span id="taxRalC">-</span> €</td>
                     </tr>
                     <tr>
-                        <td>INPS</td>
+                        <th>INPS</th>
                         <td><span id="taxInpsS">-</span> €</td>
                         <td><span id="taxInpsC">-</span> €</td>
                     </tr>
                     <tr>
-                        <td>Imponibile IRPEF</td>
+                        <th>
+                            Imponibile IRPEF <button id="imponibileInfo" type="button" class="btn"
+                                data-bs-toggle="tooltip" data-bs-placement="top"
+                                title="Con agevolazione: abbattimento dell’imponibile del 90% per i residenti nel mezzogiorno, abbattimento del 70% per gli altri rimpatriati.">
+                                <i class="fa fa-info-circle"></i>
+                            </button>
+                        </th>
                         <td><span id="imponibileIrpefS">-</span> €</td>
                         <td><span id="imponibileIrpefC">-</span> €</td>
                     </tr>
                     <tr>
-                        <td>Totale IRPEF</td>
+                        <th id="btnIrpefInfo"> Totale IRPEF <button type="button" class="btn">
+                                <i class="fa fa-angle-down"></i>
+                            </button></th>
                         <td><span id="irpefTotS">-</span> €</td>
                         <td><span id="irpefTotC">-</span> €</td>
-
-                        <td>
-                            <button type="button" class="btn" id="btnIrpefInfo">
-                                Info +
-                            </button>
-                        </td>
                     </tr>
 
                     <tr class="collapsemeIrpef" style="display:none;">
@@ -171,19 +259,21 @@
                         <td><span id="taxComuneC">-</span> €</td>
                     </tr>
                     <tr>
-                        <td>Detrazioni</td>
+                        <th>Detrazioni<button type="button" class="btn">
+                                <i class="fa fa-angle-down"></i>
+                            </button></th>
                         <td><span id="DetrazioniTotS">-</span> €</td>
                         <td><span id="DetrazioniTotC">-</span> €</td>
                     </tr>
                     <tr>
                         <th>Netto annuale</th>
-                        <th><span id="nettoAnnualeS">-</span> €</th>
-                        <th><span id="nettoAnnualeC">-</span> €</th>
+                        <td><span id="nettoAnnualeS">-</span> €</td>
+                        <td><span id="nettoAnnualeC">-</span> €</td>
                     </tr>
                     <tr>
                         <th>Totale tasse</th>
-                        <th><span id="tasseTotS">-</span> %</th>
-                        <th><span id="tasseTotC">-</span> %</th>
+                        <td><span id="tasseTotS">-</span> %</td>
+                        <td><span id="tasseTotC">-</span> %</td>
                     </tr>
                 </tbody>
             </table>
@@ -192,33 +282,33 @@
 
                 <tbody>
                     <tr>
-                        <td colspan="3">Calcolo scaglioni Irpef</td>
-                        <td>Senza agevolazione</td>
-                        <td>Con agevolazione</td>
+                        <td colspan="3">Scaglioni Irpef</td>
+                        <td>Standard</td>
+                        <td>Agevolato</td>
                     </tr>
                     <tr>
                         <td>0 €</td>
-                        <td>15,000 €</td>
+                        <td>15K €</td>
                         <td>23%</td>
                         <td><span id="irpefS0">-</span> €</td>
                         <td><span id="irpefC0">-</span> €</td>
                     </tr>
                     <tr>
-                        <td>15,000 €</td>
-                        <td>28,000 €</td>
+                        <td>15K €</td>
+                        <td>28K €</td>
                         <td>25%</td>
                         <td><span id="irpefS1">-</span> €</td>
                         <td><span id="irpefC1">-</span> €</td>
                     </tr>
                     <tr>
-                        <td>28,000 €</td>
-                        <td>50,000 €</td>
+                        <td>28K €</td>
+                        <td>50K €</td>
                         <td>35%</td>
                         <td><span id="irpefS2">-</span> €</td>
                         <td><span id="irpefC2">-</span> €</td>
                     </tr>
                     <tr>
-                        <td>50,000 €</td>
+                        <td>50K €</td>
                         <td></td>
                         <td>43%</td>
                         <td><span id="irpefS3">-</span> €</td>
@@ -232,7 +322,7 @@
                 </tbody>
             </table>
 
-            <div id="discaimer">Ai fini della semplificazione alcune variabili sono state approssimate (come lo stato
+            <div id="disclaimer">Ai fini della semplificazione alcune variabili sono state approssimate (come lo stato
                 civile e altre).
                 <br>Questo documento non rappresenta l'autorità legale e deve essere utilizzato solo a fini di
                 approssimazione.
