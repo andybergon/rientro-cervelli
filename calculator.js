@@ -1,6 +1,7 @@
 const regioniToComuni = {
-    'Lazio': ['Roma', 'Latina'],
-    'Sicilia': ['Catania'],
+    'Lazio': ['Roma', 'Latina', 'Rieti', 'Viterbo', 'Frosinone'],
+    'Sicilia': ['Catania', 'Palermo'],
+    'Campania': ['Caserta'],
 }
 var soglieIrpefToPercentualeMarginale = {
     15_000 : 0.23, 
@@ -11,14 +12,23 @@ var soglieIrpefToPercentualeMarginale = {
 var regioniToIrpef = {
     'Lazio': 0.02,
     'Sicilia': 0.0123,
+    'Abruzzo': 0.0173,
+    'Calabria': 0.0203,
+    'Campania': 0.0203,
+    'Sardegna': 0.0123,
     // ...
     // 'Lazio': {15_000: 0.0173, 28_000: 0.0273, 55_000: 0.0293, 75_000: 0.0323, 75_000: 3.33}
     // could be map {threashold: percentage, ...}
 }
 var comuniToIrpef = {
     'Roma': 0.009,
+    'Rieti': 0.0076,
+    'Viterbo': 0.008,
+    'Frosinone': 0.008,
     'Catania': 0.008,
+    'Palermo': 0.008,
     'Latina': undefined,
+    'Caserta': 0.008,
     // ...
     // could be map {threashold: percentage, ...}
 }
@@ -38,14 +48,15 @@ const RegolaImponibile = {
 const regioneToRegola = {
     'Lazio': RegolaImponibile.NORD,
     'Sicilia': RegolaImponibile.MEZZOGIORNO,
+    'Campania': RegolaImponibile.MEZZOGIORNO,
     // ...
 }
 
 // ral- inps - irpefTotale
-function calcolaNetto(ral, regione, comune, hasAgevolazione){
+function calcolaNetto(ral, regione, comune, hasAgevolazione, comuneDef){
     var inps = calcolaInps(ral);    
     var biEffettiva = baseImponibile(ral, regione, hasAgevolazione);
-    var irpefTotale = calcolaIrpefTotale(biEffettiva, regione, comune);
+    var irpefTotale = calcolaIrpefTotale(biEffettiva, regione, comune, comuneDef);
     return ral - inps - irpefTotale;
 }
 
@@ -70,14 +81,14 @@ function calcolaIrpefRegione(imponibile, regione){
     soglie = {1_000_000_000: regioniToIrpef[regione]}
     return calcolaTassa(imponibile, soglie);
 }
-function calcolaIrpefComune(imponibile, comune){
-    soglie = {1_000_000_000: comuniToIrpef[comune]}
+function calcolaIrpefComune(imponibile, comune, comuneDef){
+    soglie = comuniToIrpef[comune] ? {1_000_000_000: comuniToIrpef[comune]} : {1_000_000_000: comuneDef};
     return calcolaTassa(imponibile, soglie);
 }
-function calcolaIrpefTotale(imponibile, regione, comune){
+function calcolaIrpefTotale(imponibile, regione, comune, comuneDef){
    return calcolaTassa(imponibile, soglieIrpefToPercentualeMarginale) +
         calcolaIrpefRegione(imponibile, regione) +
-        calcolaIrpefComune(imponibile, comune);
+        calcolaIrpefComune(imponibile, comune, comuneDef);
 }
 function calcolaTassa(lordo, soglieToPercentualeMarginale) {
     var tasseTotale = 0;

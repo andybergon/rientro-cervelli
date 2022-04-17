@@ -37,15 +37,70 @@ input[type=number]::-webkit-inner-spin-button {
 /* input, select{
     background-color: #eaf1f8!important;
 } */
-#body {
-    background-color: #eaf1f8;
-}
 
-table {
-    max-width: 600px;
+
+table, .carousel-inner {
     background-color: #fff;
     border-radius: .25rem;
+    max-width: 685px;
+    border: 1px solid;
+    padding: 10px;
+    box-shadow: 1px 1px 5px #c9cdd1;
 }
 #tax {
     margin-top: 30px;
 }
+ #disclaimer {
+     max-width: 685px;
+ }
+ .btn:focus {
+    outline: none;
+    box-shadow: none;
+  }
+  .btn{
+	box-shadow: none !important
+}
+#btnIrepfInfo {
+    cursor: pointer;
+}
+.border-left {
+    border-left: 2px solid #191970;
+}
+.btn {padding: 0 12px;}
+.btn-primary {padding: 6px 12px;}
+.collapsemeIrpef td:first-child {
+    padding-left:20px;
+}
+.tooltip-inner {
+    text-align: left;
+}
+.collapsemeIrpef{
+    background-color: #deebf7;
+}
+.mobile-show{
+    display: none;
+}
+@media only screen and (max-width: 685px) {
+    body {
+      font-size: 14px!important;
+    }
+    table {
+        max-width: 100%!important;
+    }
+    .mobile-hide {
+        display: none;
+    }
+    .mobile-show{
+        display: block!important;
+        margin-bottom: 1rem;
+    }
+  }
+  @media only screen and (max-width: 400px) {
+    body, h6 {
+      font-size: 13px!important;
+    }
+    table {
+        max-width: 100%!important;
+    }
+    
+  }
