@@ -18,7 +18,6 @@ h2{
 h3 {
     font-size: 13px;
     opacity: 0.9;
-    padding-top: 15px;
     color:crimson;
 }
 label {
@@ -38,7 +37,14 @@ input[type=number]::-webkit-inner-spin-button {
     background-color: #eaf1f8!important;
 } */
 
-
+#isMezzogiorno {
+    display: inline-block;
+    background-color: #deebf7;
+    border-radius: .25rem;
+    padding: 0 .5em;
+    margin-left: 1em;    
+    font-size: 13px;
+}
 table, .carousel-inner {
     background-color: #fff;
     border-radius: .25rem;
@@ -47,6 +53,12 @@ table, .carousel-inner {
     padding: 10px;
     box-shadow: 1px 1px 5px #c9cdd1;
 }
+.carousel-inner {
+    padding: 20px 20px 40px;
+    background-color:#deebf7;
+    border-color:transparent;
+}
+
 #tax {
     margin-top: 30px;
 }
@@ -66,7 +78,10 @@ table, .carousel-inner {
 .border-left {
     border-left: 2px solid #191970;
 }
-.btn {padding: 0 12px;}
+.btn {padding: 0px 0px 2px 3px;}
+.fa {
+    font-size: 14px;
+}
 .btn-primary {padding: 6px 12px;}
 .collapsemeIrpef td:first-child {
     padding-left:20px;
@@ -80,6 +95,16 @@ table, .carousel-inner {
 .mobile-show{
     display: none;
 }
+
+.carousel-indicators {
+    margin-bottom: 0;
+}
+.carousel-indicators [data-bs-target] {
+    width: 10px;
+    height: 10px;
+    border-radius: 100%;
+    background-color: #191970;
+  }
 @media only screen and (max-width: 685px) {
     body {
       font-size: 14px!important;

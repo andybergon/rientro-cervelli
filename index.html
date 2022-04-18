@@ -21,7 +21,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="cervelli.css">
-    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" />
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
@@ -86,13 +86,13 @@
                 <div class="col-auto align-self-end">
                     <button type="submit" class="btn btn-primary mb-3">Calcola</button>
                 </div>
+                <div id="warningComune" style="display:none;">
+                    <h3>Nessuna informazione per questo comune.<br>Inserisci coefficiente Irpef comunale o lascia il nostro
+                        valore di default (0.009).</h3> <input type="number" placeholder="0.009" min="0" max="1" step="0.0001" id="customComune" class="form-control form-control-sm" style="width:70px;" value="0.009" >
+                </div>
             </form>
         </div>
-        <div id="warningComune" style="display:none;">
-            <h3>Nessuna informazione per questo comune.<br>Inserisci coefficiente Irpef comunale o lascia il nostro
-                valore di default (0.009).</h3> <input id="customComune" class="form-control form-control-sm" style="width:70px;" type="text"
-                placeholder="0.009" type="number" min="0" value="0.009" max="1">
-        </div>
+        
     </div>
 
     <div id="body">
@@ -134,7 +134,12 @@
             </table>
 
             <div id="carouselExampleControls " class="carousel slide mobile-show" data-bs-ride="carousel">
-                <div class="carousel-inner" style="background-color:#deebf7; padding: 20px; border-color:transparent;">
+                <div class="carousel-indicators">
+                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                  </div>
+                <div class="carousel-inner">
                     <div class="carousel-item active">
                         <div><strong>12 mensilità</strong><br>
                             Standard: <strong style="font-size: 16px;"><span class="standard12">-</span>&nbsp;€</strong> <br>
@@ -210,7 +215,7 @@
                     <tr>
                         <td scope="col"></td>
                         <td scope="col">Standard</td>
-                        <td scope="col">Agevolato</td>
+                        <td scope="col" style="width: 182px;">Agevolato</td>
                     </tr>
                 </thead>
                 <tbody>
@@ -226,14 +231,14 @@
                     </tr>
                     <tr>
                         <th>
-                            Imponibile IRPEF <button id="imponibileInfo" type="button" class="btn"
-                                data-bs-toggle="tooltip" data-bs-placement="top"
-                                title="Con agevolazione: abbattimento dell’imponibile del 90% per i residenti nel mezzogiorno, abbattimento del 70% per gli altri rimpatriati.">
-                                <i class="fa fa-info-circle"></i>
-                            </button>
+                            Imponibile IRPEF 
                         </th>
                         <td><span id="imponibileIrpefS">-</span> €</td>
-                        <td><span id="imponibileIrpefC">-</span> €</td>
+                        <td><span id="imponibileIrpefC">-</span> € <div id="isMezzogiorno"><span id="PercentualeImponibile">90%</span></span><button id="imponibileInfo" type="button" class="btn"
+                            data-bs-toggle="tooltip" data-bs-placement="top"
+                            title="Abbattimento dell’imponibile del 90% per i residenti nel mezzogiorno, abbattimento del 70% per gli altri rimpatriati.">
+                            <i class="fa fa-info-circle"></i>
+                        </button></div></td>
                     </tr>
                     <tr>
                         <th id="btnIrpefInfo"> Totale IRPEF <button type="button" class="btn">

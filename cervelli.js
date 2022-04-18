@@ -59,10 +59,13 @@ function fillTableTaxes (ral) {
     $('#taxInpsS').text(Math.round(inps));
     $('#taxInpsC').text(Math.round(inps));
 
+
     let biS = baseImponibile(ral, regione, false);
     let biC = baseImponibile(ral, regione, true);
     $('#imponibileIrpefS').text(Math.round(biS));
     $('#imponibileIrpefC').text(Math.round(biC));
+    let PercentualeImponibile = regioneToRegola[regione] == 0.1 ? "90%" : "70%";
+    $('#PercentualeImponibile').text(PercentualeImponibile);
 
     let standardiIrpef = calcolaIrpef(biS);
     let rientroIrpef = calcolaIrpef(biC);
