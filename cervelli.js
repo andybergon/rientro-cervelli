@@ -176,6 +176,3 @@ function fillScaglioniIrpef(arr,id){
 $(function() {
     render();
 });
-
-
-
