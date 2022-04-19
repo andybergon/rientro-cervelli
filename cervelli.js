@@ -1,55 +1,55 @@
-$(document).ready(submit);
-
-function submit() {  
-    $("#imponibileInfo").tooltip();  
-    addRegionToOptions(regioniToComuni);
-    addComuniToOptions(regioniToComuni);      
+function preRender() {
+    $("#imponibileInfo").tooltip();
+    addRegionToOptions(nomiRegioni);
+    addComuniToOptions(regioniToComuni);
     addEditableRegionalIrpef(comuniToIrpef);
     $(document).on('submit', '#submit-salary', () => {
         $("#dopo5anni").hide();
-        render();
+        fillTables();
         $("#body").show('slow');
         return false;
-     });
-     
+    });
 }
-function render() {
-    
-    var ral = $('#ral').val();        
-    var regione = $('#region').children("option:selected").text();
-    var comune = $('#comune').children("option:selected").text();
-    let comuneDef = $('#customComune').val();
 
-    var standardSalary = calcolaNetto(ral, regione, comune, false, comuneDef);
-    console.log('standard '+standardSalary)
-    var rientroSalary = calcolaNetto(ral, regione, comune, true, comuneDef);
-    console.log('rientro '+rientroSalary)
+function fillTables() {
+    const ral = $('#ral').val();
+    const regionName = $('#region').children("option:selected").text();
+    const regione = findRegionByName(regionName);
+    const comune = $('#comune').children("option:selected").text();
+    const comuneDef = $('#customComune').val();
+
+    const standardSalary = calcolaNetto(ral, regione, comune, false, comuneDef);
+    console.log('standard ' + standardSalary)
+    console.log(ral, regione, comune, comuneDef);
+    const rientroSalary = calcolaNetto(ral, regione, comune, true, comuneDef);
+    console.log('rientro ' + rientroSalary)
     $('#nettoAnnualeS').text(Math.round(standardSalary));
     $('#nettoAnnualeC').text(Math.round(rientroSalary));
 
-    var percentualeTasseS = (1 - standardSalary/ral)*100;
-    var percentualeTasseC = (1 - rientroSalary/ral)*100;
+    const percentualeTasseS = (1 - standardSalary / ral) * 100;
+    const percentualeTasseC = (1 - rientroSalary / ral) * 100;
     $('#tasseTotS').text(Math.round(percentualeTasseS));
     $('#tasseTotC').text(Math.round(percentualeTasseC));
     fillTableSalaries(standardSalary, rientroSalary, mesi);
     fillTableTaxes(ral);
-    $( "#body" ).hide();
-    $("#btnIrpefInfo").unbind('click').bind('click',function() {
-        $( ".collapsemeIrpef").toggle('slow');
-        $( "#btnIrpefInfo").toggleClass('border-left');
-        $( ".collapsemeIrpef").toggleClass('border-left');
+    $("#body").hide();
+    $("#btnIrpefInfo").unbind('click').bind('click', function () {
+        $(".collapsemeIrpef").toggle('slow');
+        $("#btnIrpefInfo").toggleClass('border-left');
+        $(".collapsemeIrpef").toggleClass('border-left');
         $(this).find('i').toggleClass('fa-angle-down fa-angle-up')
     });
 }
 
 function valueChanged() {
-    if($("#flexCheckDefault").is(":checked")) {
+    if ($("#flexCheckDefault").is(":checked")) {
         $("#dopo5anni").show("slow");
     } else {
         $("#dopo5anni").hide("slow");
     }
 }
-function fillTableTaxes (ral) {
+
+function fillTableTaxes(ral) {
     $('#taxRalS').text(ral);
     $('#taxRalC').text(ral);
     var regione = $('#region').children("option:selected").text();
@@ -97,54 +97,49 @@ function fillTableTaxes (ral) {
 }
 
 
-var mesi = [12,13,14];
-function fillTableSalaries (std,rientro, mesi){
+const mesi = [12, 13, 14];
+
+function fillTableSalaries(std, rientro, mesi) {
     mesi.forEach(mese => fillTableSalary(std, rientro, mese));
 }
 
-function fillTableSalary(std,rientro, mese) {
-    $('.standard'+mese).text(Math.round(std/mese));
-    $('.rientro'+mese).text(Math.round(rientro/mese));
-    $('.dif'+mese).text(Math.round((rientro-std)/mese));
+function fillTableSalary(std, rientro, mese) {
+    $('.standard' + mese).text(Math.round(std / mese));
+    $('.rientro' + mese).text(Math.round(rientro / mese));
+    $('.dif' + mese).text(Math.round((rientro - std) / mese));
 }
 
 
-function addRegionToOptions(regioniToComuni) {
-    for (const regione in regioniToComuni) {
-        $('#region').append($('<option>', { 
+function addRegionToOptions(regioni) {
+    for (let regione of regioni) {
+        $('#region').append($('<option>', {
             value: regione,
-            text : regione
+            text: regione
         }));
     }
 }
 
-function addComuniToOptions(regioniToComuni){
-    $("#region").change(function(){
-        $('#comune').html('<option disabled selected>Comune</option>');   
-        for (const regione in regioniToComuni) {            
-            if(regione == $('#region').children("option:selected").val()){
-                for (const c in regioniToComuni[regione]) {
-                    $('#comune').append($('<option>', { 
-                        value: regioniToComuni[regione][c],
-                        text : regioniToComuni[regione][c]
-                    }));
-                }
-            }            
-        }      
+function addComuniToOptions(regioniToComuni) {
+    $("#region").change(() => {
+        $('#comune').html('<option disabled selected>Comune</option>');
+        let selectedRegion = $('#region').children("option:selected").val()
+
+        for (let comune of regioniToComuni[findRegionByName(selectedRegion)]) {
+            $('#comune').append($('<option>', {
+                value: comune,
+                text: comune
+            }));
+        }
     });
 }
 
 function addEditableRegionalIrpef(comuniToIrpef) {
-    $("#comune").change(function(){
-        for (const comune in comuniToIrpef) {
-            if (comune == $('#comune').children("option:selected").val()) {                
-                if(comuniToIrpef[comune] == undefined){
-                    $('#warningComune').show()
-                } else {
-                    $('#warningComune').hide();
-
-                }
-            }
+    $("#comune").change(() => {
+        let selectedComune = $('#comune').children("option:selected").val();
+        if (comuniToIrpef[selectedComune] == undefined) {
+            $('#warningComune').show()
+        } else {
+            $('#warningComune').hide();
         }
     });
 }
@@ -159,20 +154,21 @@ function findScaglioniIrpef(bi, soglieToPercentualeMarginale) {
         var deltaSoglia = soglia - sogliaPrecedente;
         var used = Math.min(deltaSoglia, resto);
         resto -= used;
-        tasseTotale += used*percentuale;
-        scaglioniIrpef.push(used*percentuale);
+        tasseTotale += used * percentuale;
+        scaglioniIrpef.push(used * percentuale);
     }
     return scaglioniIrpef;
 }
 
-function fillScaglioniIrpef(arr,id){
-    for (const i in arr){
-        $(id+i).text(Math.round(arr[i]));
+function fillScaglioniIrpef(arr, id) {
+    for (const i in arr) {
+        $(id + i).text(Math.round(arr[i]));
     }
-    
+
 }
 
-
-$(function() {
-    render();
+$(function () {
+    preRender();
+    fillTables();
 });
+$(document).ready(() => $('#submit-salary').submit());
