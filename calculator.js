@@ -79,7 +79,6 @@ const regioniToScaglioniIrpef = {
         15_000: 0.007,
         1_000_000_000: 0.0123,
     },
-    // TODO: emilia, friuli
     // ~ Lazio: 1.73% flat under 35k
     LAZIO: {
         15_000: 0.0173,
