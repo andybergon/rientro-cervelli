@@ -1,26 +1,168 @@
+const Regione = {
+    ABRUZZO: "Abruzzo",
+    BASILICATA: "Basilicata",
+    CALABRIA: "Calabria",
+    CAMPANIA: "Campania",
+    EMILIA_ROMAGNA: "Emilia-Romagna",
+    FRIULI_VENEZIA_GIULIA: "Friuli Venezia Giulia",
+    LAZIO: "Lazio",
+    LIGURIA: "Liguria",
+    LOMBARDIA: "Lombardia",
+    MARCHE: "Marche",
+    MOLISE: "Molise",
+    PIEMONTE: "Piemonte",
+    PUGLIA: "Puglia",
+    SARDEGNA: "Sardegna",
+    SICILIA: "Sicilia",
+    TOSCANA: "Toscana",
+    TRENTINO_ALTO_ADIGE: "Trentino-Alto Adige",
+    UMBRIA: "Umbria",
+    VALLE_D_AOSTA: "Valle d'Aosta",
+    VENETO: "Veneto",
+}
+const findRegionByName = (regionString) => Object.keys(Regione).find(key => Regione[key] === regionString);
+
+const nomiRegioni = Object.keys(Regione).map(key => Regione[key]);
+
 const regioniToComuni = {
-    'Lazio': ['Roma', 'Latina', 'Rieti', 'Viterbo', 'Frosinone'],
-    'Sicilia': ['Catania', 'Palermo'],
-    'Campania': ['Caserta'],
+    ABRUZZO: ["PLACEHOLDER"],
+    BASILICATA: ["PLACEHOLDER"],
+    CALABRIA: ["PLACEHOLDER"],
+    CAMPANIA: ['Caserta'],
+    EMILIA_ROMAGNA: ["PLACEHOLDER"],
+    FRIULI_VENEZIA_GIULIA: ["PLACEHOLDER"],
+    LAZIO: ['Roma', 'Latina', 'Rieti', 'Viterbo', 'Frosinone'],
+    LIGURIA: ["PLACEHOLDER"],
+    LOMBARDIA: ["PLACEHOLDER"],
+    MARCHE: ["PLACEHOLDER"],
+    MOLISE: ["PLACEHOLDER"],
+    PIEMONTE: ["PLACEHOLDER"],
+    PUGLIA: ["PLACEHOLDER"],
+    SARDEGNA: ["PLACEHOLDER"],
+    SICILIA: ['Catania', 'Palermo'],
+    TOSCANA: ["PLACEHOLDER"],
+    TRENTINO_ALTO_ADIGE: ["PLACEHOLDER"],
+    UMBRIA: ["PLACEHOLDER"],
+    VALLE_D_AOSTA: ["PLACEHOLDER"],
+    VENETO: ["PLACEHOLDER"],
 }
-var soglieIrpefToPercentualeMarginale = {
-    15_000 : 0.23, 
-    28_000 : 0.25,
-    50_000 : 0.35,
-    1_000_000_000: 0.43,
+
+const regioniToScaglioniIrpef = {
+    ABRUZZO: {
+        1_000_000_000: 0.0173,
+    },
+    BASILICATA: {
+        55_000: 0.0123,
+        75_000: 0.0173,
+        1_000_000_000: 0.0233,
+    },
+    BOLZANO: { // "Regione"
+        35_000: 0,
+        75_000: 0.0123,
+        1_000_000_000: 0.0173,
+    },
+    CALABRIA: {
+        1_000_000_000: 0.0203,
+    },
+    CAMPANIA: {
+        1_000_000_000: 0.0203,
+    },
+    EMILIA_ROMAGNA: {
+        15_000: 0.0133,
+        28_000: 0.0193,
+        55_000: 0.0203,
+        75_000: 0.0223,
+        1_000_000_000: 0.0233,
+    },
+    FRIULI_VENEZIA_GIULIA: {
+        15_000: 0.007,
+        1_000_000_000: 0.0123,
+    },
+    LAZIO: { // 1.73% flat under 35k
+        15_000: 0.0173,
+        28_000: 0.0273,
+        55_000: 0.0293,
+        75_000: 0.0323,
+        1_000_000_000: 0.0333,
+    },
+    LIGURIA: {
+        15_000: 0.0123,
+        28_000: 0.0181,
+        55_000: 0.0231,
+        75_000: 0.0232,
+        1_000_000_000: 0.0233,
+    },
+    LOMBARDIA: {
+        15_000: 0.0123,
+        28_000: 0.0158,
+        55_000: 0.0172,
+        75_000: 0.0173,
+        1_000_000_000: 0.0174,
+    },
+    MARCHE: {
+        15_000: 0.0123,
+        28_000: 0.0153,
+        55_000: 0.0170,
+        75_000: 0.0172,
+        1_000_000_000: 0.0173,
+    },
+    MOLISE: {
+        15_000: 0.0203,
+        28_000: 0.0223,
+        55_000: 0.0243,
+        75_000: 0.0253,
+        1_000_000_000: 0.0263,
+    },
+    PIEMONTE: {
+        15_000: 0.0162,
+        28_000: 0.0213,
+        55_000: 0.0275,
+        75_000: 0.0332,
+        1_000_000_000: 0.0333,
+    },
+    PUGLIA: {
+        15_000: 0.0133,
+        28_000: 0.0143,
+        55_000: 0.0171,
+        75_000: 0.0172,
+        1_000_000_000: 0.0173,
+    },
+    SARDEGNA: {
+        1_000_000_000: 0.0123
+    },
+    SICILIA: {
+        1_000_000_000: 0.0123
+    },
+    TOSCANA: {
+        15_000: 0.0142,
+        28_000: 0.0143,
+        55_000: 0.0168,
+        75_000: 0.0172,
+        1_000_000_000: 0.0173,
+    },
+    TRENTO: { // "Regione"
+        15_000: 0.0123, // ~0 contando detrazione
+        28_000: 0.0123,
+        55_000: 0.0123,
+        75_000: 0.0173,
+        1_000_000_000: 0.0173,
+    },
+    UMBRIA: {
+        15_000: 0.0123,
+        28_000: 0.0163,
+        55_000: 0.0168,
+        75_000: 0.0173,
+        1_000_000_000: 0.0183,
+    },
+    VALLE_D_AOSTA: {
+        1_000_000_000: 0.0123
+    },
+    VENETO: {
+        1_000_000_000: 0.0123
+    }
 }
-var regioniToIrpef = {
-    'Lazio': 0.02,
-    'Sicilia': 0.0123,
-    'Abruzzo': 0.0173,
-    'Calabria': 0.0203,
-    'Campania': 0.0203,
-    'Sardegna': 0.0123,
-    // ...
-    // 'Lazio': {15_000: 0.0173, 28_000: 0.0273, 55_000: 0.0293, 75_000: 0.0323, 75_000: 3.33}
-    // could be map {threashold: percentage, ...}
-}
-var comuniToIrpef = {
+
+const comuniToIrpef = {
     'Roma': 0.009,
     'Rieti': 0.0076,
     'Viterbo': 0.008,
@@ -33,9 +175,16 @@ var comuniToIrpef = {
     // could be map {threashold: percentage, ...}
 }
 
-var soglieInpsToPercentualeMarginale = {
-    47_379 : 0.0919, 
-    103_055 : 0.1019,
+const soglieIrpefToPercentualeMarginale = {
+    15_000: 0.23,
+    28_000: 0.25,
+    50_000: 0.35,
+    1_000_000_000: 0.43,
+}
+
+const soglieInpsToPercentualeMarginale = {
+    47_379: 0.0919,
+    103_055: 0.1019,
     1_000_000_000: 0,
 }
 
@@ -46,22 +195,38 @@ const RegolaImponibile = {
 }
 
 const regioneToRegola = {
-    'Lazio': RegolaImponibile.NORD,
-    'Sicilia': RegolaImponibile.MEZZOGIORNO,
-    'Campania': RegolaImponibile.MEZZOGIORNO,
-    // ...
+    ABRUZZO: RegolaImponibile.MEZZOGIORNO,
+    BASILICATA: RegolaImponibile.MEZZOGIORNO,
+    CALABRIA: RegolaImponibile.MEZZOGIORNO,
+    CAMPANIA: RegolaImponibile.MEZZOGIORNO,
+    EMILIA_ROMAGNA: RegolaImponibile.NORD,
+    FRIULI_VENEZIA_GIULIA: RegolaImponibile.NORD,
+    LAZIO: RegolaImponibile.NORD,
+    LIGURIA: RegolaImponibile.NORD,
+    LOMBARDIA: RegolaImponibile.NORD,
+    MARCHE: RegolaImponibile.NORD,
+    MOLISE: RegolaImponibile.MEZZOGIORNO,
+    PIEMONTE: RegolaImponibile.NORD,
+    PUGLIA: RegolaImponibile.MEZZOGIORNO,
+    SARDEGNA: RegolaImponibile.MEZZOGIORNO,
+    SICILIA: RegolaImponibile.MEZZOGIORNO,
+    TOSCANA: RegolaImponibile.NORD,
+    TRENTINO_ALTO_ADIGE: RegolaImponibile.NORD,
+    UMBRIA: RegolaImponibile.NORD,
+    VALLE_D_AOSTA: RegolaImponibile.NORD,
+    VENETO: RegolaImponibile.NORD,
 }
 
-// ral- inps - irpefTotale
-function calcolaNetto(ral, regione, comune, hasAgevolazione, comuneDef){
-    var inps = calcolaInps(ral);    
+// ral - inps - irpefTotale
+function calcolaNetto(ral, regione, comune, hasAgevolazione, comuneDef) {
+    var inps = calcolaInps(ral);
     var biEffettiva = baseImponibile(ral, regione, hasAgevolazione);
     var irpefTotale = calcolaIrpefTotale(biEffettiva, regione, comune, comuneDef);
     return ral - inps - irpefTotale;
 }
 
 // TODO: - inps 2 times
-function baseImponibile(lordo,regione,hasAgevolazione) {
+function baseImponibile(lordo, regione, hasAgevolazione) {
     var inps = calcolaInps(lordo);
     var imponibileStandard = lordo - inps;
     var regola = (hasAgevolazione) ? regioneToRegola[regione] : RegolaImponibile.STANDARD;
@@ -71,25 +236,30 @@ function baseImponibile(lordo,regione,hasAgevolazione) {
 function _calcolaBaseImponibile(imponibileStandard, regolaImponibile) {
     return imponibileStandard * regolaImponibile;
 }
-function calcolaInps(imponibile){
+
+function calcolaInps(imponibile) {
     return calcolaTassa(imponibile, soglieInpsToPercentualeMarginale);
 }
-function calcolaIrpef(imponibile){
+
+function calcolaIrpef(imponibile) {
     return calcolaTassa(imponibile, soglieIrpefToPercentualeMarginale);
 }
-function calcolaIrpefRegione(imponibile, regione){
-    soglie = {1_000_000_000: regioniToIrpef[regione]}
+
+function calcolaIrpefRegione(imponibile, regione) {
+    return calcolaTassa(imponibile, regioniToScaglioniIrpef[regione]);
+}
+
+function calcolaIrpefComune(imponibile, comune, comuneDef) {
+    let soglie = {1_000_000_000: comuniToIrpef[comune] ? comuniToIrpef[comune] : comuneDef};
     return calcolaTassa(imponibile, soglie);
 }
-function calcolaIrpefComune(imponibile, comune, comuneDef){
-    soglie = comuniToIrpef[comune] ? {1_000_000_000: comuniToIrpef[comune]} : {1_000_000_000: comuneDef};
-    return calcolaTassa(imponibile, soglie);
-}
-function calcolaIrpefTotale(imponibile, regione, comune, comuneDef){
-   return calcolaTassa(imponibile, soglieIrpefToPercentualeMarginale) +
+
+function calcolaIrpefTotale(imponibile, regione, comune, comuneDef) {
+    return calcolaTassa(imponibile, soglieIrpefToPercentualeMarginale) +
         calcolaIrpefRegione(imponibile, regione) +
         calcolaIrpefComune(imponibile, comune, comuneDef);
 }
+
 function calcolaTassa(lordo, soglieToPercentualeMarginale) {
     var tasseTotale = 0;
     var resto = lordo;
@@ -99,7 +269,7 @@ function calcolaTassa(lordo, soglieToPercentualeMarginale) {
         var deltaSoglia = soglia - sogliaPrecedente;
         var used = Math.min(deltaSoglia, resto);
         resto -= used;
-        tasseTotale += used*percentuale
+        tasseTotale += used * percentuale
     }
     return tasseTotale;
 }
