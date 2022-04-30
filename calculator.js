@@ -172,7 +172,7 @@ const comuniToIrpef = {
     'Latina': undefined,
     'Caserta': 0.008,
     // ...
-    // could be map {threashold: percentage, ...}
+    // could be map {threshold: percentage, ...}
 }
 
 const soglieIrpefToPercentualeMarginale = {
@@ -219,17 +219,17 @@ const regioneToRegola = {
 
 // ral - inps - irpefTotale
 function calcolaNetto(ral, regione, comune, hasAgevolazione, comuneDef) {
-    var inps = calcolaInps(ral);
-    var biEffettiva = baseImponibile(ral, regione, hasAgevolazione);
-    var irpefTotale = calcolaIrpefTotale(biEffettiva, regione, comune, comuneDef);
+    const inps = calcolaInps(ral);
+    const biEffettiva = baseImponibile(ral, regione, hasAgevolazione);
+    const irpefTotale = calcolaIrpefTotale(biEffettiva, regione, comune, comuneDef);
     return ral - inps - irpefTotale;
 }
 
 // TODO: - inps 2 times
 function baseImponibile(lordo, regione, hasAgevolazione) {
-    var inps = calcolaInps(lordo);
-    var imponibileStandard = lordo - inps;
-    var regola = (hasAgevolazione) ? regioneToRegola[regione] : RegolaImponibile.STANDARD;
+    const inps = calcolaInps(lordo);
+    const imponibileStandard = lordo - inps;
+    const regola = (hasAgevolazione) ? regioneToRegola[regione] : RegolaImponibile.STANDARD;
     return _calcolaBaseImponibile(imponibileStandard, regola);
 }
 
@@ -261,13 +261,13 @@ function calcolaIrpefTotale(imponibile, regione, comune, comuneDef) {
 }
 
 function calcolaTassa(lordo, soglieToPercentualeMarginale) {
-    var tasseTotale = 0;
-    var resto = lordo;
-    var sogliaPrecedente = 0;
+    let tasseTotale = 0;
+    let resto = lordo;
+    const sogliaPrecedente = 0;
     for (const soglia in soglieToPercentualeMarginale) {
-        var percentuale = soglieToPercentualeMarginale[soglia]
-        var deltaSoglia = soglia - sogliaPrecedente;
-        var used = Math.min(deltaSoglia, resto);
+        const percentuale = soglieToPercentualeMarginale[soglia]
+        const deltaSoglia = soglia - sogliaPrecedente;
+        const used = Math.min(deltaSoglia, resto);
         resto -= used;
         tasseTotale += used * percentuale
     }
