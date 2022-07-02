@@ -1,14 +1,17 @@
-function preRender() {
-    $("#imponibileInfo").tooltip();
-    addRegionToOptions(nomiRegioni);
-    addComuniToOptions(regioniToComuni);
-    addEditableRegionalIrpef(comuniToIrpef);
+function preRender() {    
+$("#imponibileInfo").tooltip();
+addRegionToOptions(nomiRegioni);
+$('#region option[value="Lazio"]').attr("selected", "selected");
+addComuniToOptions(regioniToComuni);
+addEditableRegionalIrpef(comuniToIrpef);
     $(document).on('submit', '#submit-salary', () => {
         $("#dopo5anni").hide();
         fillTables();
         $("#body").show('slow');
         return false;
     });
+    $('#comune option[value="Roma"]').attr("selected", "selected");
+    $("#region").change(() => addComuniToOptions(regioniToComuni));
 }
 
 function fillTables() {
@@ -121,8 +124,7 @@ function addRegionToOptions(regioni) {
     }
 }
 
-function addComuniToOptions(regioniToComuni) {
-    $("#region").change(() => {
+function addComuniToOptions(regioniToComuni) {    
         $('#comune').html('<option disabled selected>Comune</option>');
         const selectedRegion = $('#region').children("option:selected").val()
 
@@ -132,8 +134,8 @@ function addComuniToOptions(regioniToComuni) {
                 text: comune
             }));
         }
-    });
 }
+
 
 function addEditableRegionalIrpef(comuniToIrpef) {
     $("#comune").change(() => {
@@ -143,8 +145,13 @@ function addEditableRegionalIrpef(comuniToIrpef) {
         } else {
             $('#warningComune').hide();
         }
+     
+        $('#submit-salary').submit();
+            
     });
 }
+
+    
 
 function findScaglioniIrpef(bi, soglieToPercentualeMarginale) {
     let tasseTotale = 0;
@@ -172,5 +179,14 @@ function fillScaglioniIrpef(arr, id) {
 $(function () {
     preRender();
     fillTables();
+
+    $("#ral").on("input", function(){
+        $('#submit-salary').submit();          
+    });
+    $("#customComune").on("input", function(){
+        $('#submit-salary').submit();          
+    });
 });
+
 $(document).ready(() => $('#submit-salary').submit());
+
