@@ -64,39 +64,48 @@ function fillTableTaxes(ral) {
     $('#taxInpsC').text(Math.round(inps));
 
 
-    const biS = baseImponibile(ral, regione, false);
-    const biC = baseImponibile(ral, regione, true);
+    const imponibileIrpefS = baseImponibile(ral, regione, false);
+    const imponibileIrpefC = baseImponibile(ral, regione, true);
 
-    $('#imponibileIrpefS').text(Math.round(biS));
-    $('#imponibileIrpefC').text(Math.round(biC));
-    const PercentualeImponibile = regioneToRegola[regione] === 0.1 ? "90%" : "70%";
-    $('#PercentualeImponibile').text(PercentualeImponibile);
+    $('#imponibileIrpefS').text(Math.round(imponibileIrpefS));
+    $('#imponibileIrpefC').text(Math.round(imponibileIrpefC));
+    const percentualeImponibile = regioneToRegola[regione] === 0.1 ? "90%" : "70%";
+    $('#percentualeImponibile').text(percentualeImponibile);
 
-    const standardiIrpef = calcolaIrpef(biS);
-    const rientroIrpef = calcolaIrpef(biC);
-    $('#taxIrpefS').text(Math.round(standardiIrpef));
+    const standardIrpef = calcolaIrpef(imponibileIrpefS);
+    const rientroIrpef = calcolaIrpef(imponibileIrpefC);
+    $('#taxIrpefS').text(Math.round(standardIrpef));
     $('#taxIrpefC').text(Math.round(rientroIrpef));
-    $('#TotIrpefS').text(Math.round(standardiIrpef));
+    $('#TotIrpefS').text(Math.round(standardIrpef));
     $('#TotIrpefC').text(Math.round(rientroIrpef));
 
-    const standardiIrpefRegione = calcolaIrpefRegione(biS, regione);
-    const rientroIrpefRegione = calcolaIrpefRegione(biC, regione);
-    $('#taxRegioneS').text(Math.round(standardiIrpefRegione));
+    const standardIrpefRegione = calcolaIrpefRegione(imponibileIrpefS, regione);
+    const rientroIrpefRegione = calcolaIrpefRegione(imponibileIrpefC, regione);
+    $('#taxRegioneS').text(Math.round(standardIrpefRegione));
     $('#taxRegioneC').text(Math.round(rientroIrpefRegione));
 
-    const standardiIrpefComune = calcolaIrpefComune(biS, comune, comuneDef);
-    const rientroIrpefComune = calcolaIrpefComune(biC, comune, comuneDef);
+    const standardiIrpefComune = calcolaIrpefComune(imponibileIrpefS, comune, comuneDef);
+    const rientroIrpefComune = calcolaIrpefComune(imponibileIrpefC, comune, comuneDef);
     $('#taxComuneS').text(Math.round(standardiIrpefComune));
     $('#taxComuneC').text(Math.round(rientroIrpefComune));
 
-
-    const irpefTotS = standardiIrpef + standardiIrpefRegione + standardiIrpefComune;
+    const irpefTotS = standardIrpef + standardIrpefRegione + standardiIrpefComune;
     const irpefTotC = rientroIrpef + rientroIrpefRegione + rientroIrpefComune;
     $('#irpefTotS').text(Math.round(irpefTotS));
     $('#irpefTotC').text(Math.round(irpefTotC));
 
-    const biCArr = findScaglioniIrpef(biC, soglieIrpefToPercentualeMarginale);
-    const biSArr = findScaglioniIrpef(biS, soglieIrpefToPercentualeMarginale);
+    const detrazioniTotS = calcolaDetrazioni(imponibileIrpefS);
+    const detrazioniTotC = calcolaDetrazioni(imponibileIrpefC);
+    $('#detrazioniTotS').text(Math.round(detrazioniTotS));
+    $('#detrazioniTotC').text(Math.round(detrazioniTotC));
+
+    const irpefNettoS = calcolaIrpefNetto(irpefTotS, detrazioniTotS);
+    const irpefNettoC = calcolaIrpefNetto(irpefTotC, detrazioniTotC);
+    $('#irpefNettoS').text(Math.round(irpefNettoS));
+    $('#irpefNettoC').text(Math.round(irpefNettoC));
+
+    const biCArr = findScaglioniIrpef(imponibileIrpefC, soglieIrpefToPercentualeMarginale);
+    const biSArr = findScaglioniIrpef(imponibileIrpefS, soglieIrpefToPercentualeMarginale);
     fillScaglioniIrpef(biCArr, '#irpefC');
     fillScaglioniIrpef(biSArr, '#irpefS');
 }

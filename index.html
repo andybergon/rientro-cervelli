@@ -58,7 +58,7 @@
                 <select class="form-select" id="comune">
                 </select>
             </div>
-           
+
             <div id="warningComune" style="display:none;">
                 <h3>Nessuna informazione per questo comune.<br>Inserisci coefficiente Irpef comunale o lascia il nostro
                     valore di default (0.009).</h3> <input type="number" placeholder="0.009" min="0" max="1"
@@ -223,7 +223,7 @@
                 </th>
                 <td><span id="imponibileIrpefS">-</span> €</td>
                 <td><span id="imponibileIrpefC">-</span> €
-                    <div id="isMezzogiorno">-<span id="PercentualeImponibile">90%</span>
+                    <div id="isMezzogiorno">-<span id="percentualeImponibile">90%</span>
                         <button id="imponibileInfo" type="button" class="btn"
                                 data-bs-toggle="tooltip" data-bs-placement="top"
                                 title="Abbattimento dell’imponibile del 90% per i residenti nel mezzogiorno, abbattimento del 70% per gli altri rimpatriati.">
@@ -258,13 +258,14 @@
                 <td><span id="taxComuneC">-</span> €</td>
             </tr>
             <tr>
-                <th>Detrazioni
-                    <button type="button" class="btn">
-                        <i class="fa fa-angle-down"></i>
-                    </button>
-                </th>
-                <td><span id="DetrazioniTotS">-</span> €</td>
-                <td><span id="DetrazioniTotC">-</span> €</td>
+                <th>Detrazioni</th>
+                <td><span id="detrazioniTotS">-</span> €</td>
+                <td><span id="detrazioniTotC">-</span> €</td>
+            </tr>
+            <tr>
+                <th>IRPEF Netto</th>
+                <td><span id="irpefNettoS">-</span> €</td>
+                <td><span id="irpefNettoC">-</span> €</td>
             </tr>
             <tr>
                 <th>Netto annuale</th>
