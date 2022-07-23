@@ -225,11 +225,11 @@ function calcolaNetto(ral, regione, comune, hasAgevolazione, comuneDef) {
     return ral - inps - irpefTotale;
 }
 
-// TODO: - inps 2 times
+// TODO: - inps calculated 2 times
 function baseImponibile(lordo, regione, hasAgevolazione) {
-    var inps = calcolaInps(lordo);
-    var imponibileStandard = lordo - inps;
-    var regola = (hasAgevolazione) ? regioneToRegola[regione] : RegolaImponibile.STANDARD;
+    const inps = calcolaInps(lordo);
+    const imponibileStandard = lordo - inps;
+    const regola = (hasAgevolazione) ? regioneToRegola[regione] : RegolaImponibile.STANDARD;
     return _calcolaBaseImponibile(imponibileStandard, regola);
 }
 
@@ -250,7 +250,7 @@ function calcolaIrpefRegione(imponibile, regione) {
 }
 
 function calcolaIrpefComune(imponibile, comune, comuneDef) {
-    let soglie = {1_000_000_000: comuniToIrpef[comune] ? comuniToIrpef[comune] : comuneDef};
+    const soglie = {1_000_000_000: comuniToIrpef[comune] ? comuniToIrpef[comune] : comuneDef};
     return calcolaTassa(imponibile, soglie);
 }
 
@@ -261,9 +261,9 @@ function calcolaIrpefTotale(imponibile, regione, comune, comuneDef) {
 }
 
 function calcolaTassa(lordo, soglieToPercentualeMarginale) {
-    var tasseTotale = 0;
-    var resto = lordo;
-    var sogliaPrecedente = 0;
+    let tasseTotale = 0;
+    let resto = lordo;
+    let sogliaPrecedente = 0;
     for (const soglia in soglieToPercentualeMarginale) {
         var percentuale = soglieToPercentualeMarginale[soglia]
         var deltaSoglia = soglia - sogliaPrecedente;
