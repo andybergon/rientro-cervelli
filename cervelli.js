@@ -3,7 +3,7 @@ $("#imponibileInfo").tooltip();
 addRegionToOptions(nomiRegioni);
 $('#region option[value="Lazio"]').attr("selected", "selected");
 addComuniToOptions(regioniToComuni);
-addEditableRegionalIrpef(comuniToIrpef);
+addEditableRegionalIrpef(comuniToScaglioniIrpef);
     $(document).on('submit', '#submit-salary', () => {
         $("#dopo5anni").hide();
         fillTables();
@@ -146,10 +146,10 @@ function addComuniToOptions(regioniToComuni) {
 }
 
 
-function addEditableRegionalIrpef(comuniToIrpef) {
+function addEditableRegionalIrpef(comuniToScaglioniIrpef) {
     $("#comune").change(() => {
         const selectedComune = $('#comune').children("option:selected").val();
-        if (comuniToIrpef[selectedComune] == undefined) {
+        if (comuniToScaglioniIrpef.selectedComune == undefined) {
             $('#warningComune').show()
         } else {
             $('#warningComune').hide();
