@@ -269,8 +269,8 @@ const comuniToScaglioniIrpef = {
         1_000_000_000: 0.008,
     },
     'Reggio Emilia': {
-        15_000: 0,
-        15_000: 0.0069,
+       // 15_000: 0,
+        15_000: 0.0690,
         28_000: 0.0071,
         50_000: 0.0078,
         1_000_000_000: 0.008,
@@ -281,7 +281,7 @@ const comuniToScaglioniIrpef = {
 //0,78	Applicabile a scaglione di reddito da euro 28.000,01 fino a euro 50.000,00
 //0,8	Applicabile a scaglione di reddito oltre euro 50.000,00
     'Rimini': {
-        16_000: 0,
+        //16_000: 0,
         15_000: 0.0055,
         28_000: 0.0066,
         50_000: 0.0078,
@@ -355,7 +355,7 @@ const comuniToScaglioniIrpef = {
         1_000_000_000: 0.008,
     },
     'Lecco': {
-        15_000: 0,
+      //  15_000: 0,
         15_000: 0.0025,
         28_000: 0.004,
         50_000: 0.006,
@@ -367,7 +367,7 @@ const comuniToScaglioniIrpef = {
 //0,6	Applicabile a scaglione di reddito da euro 28.000,01 fino a euro 50.000,00
 //0,8	Applicabile a scaglione di reddito oltre euro 50.000,00
     'Lodi': {
-        15_000: 0,
+      //  15_000: 0,
         15_000: 0.006,
         28_000: 0.007,
         50_000: 0.0075,
@@ -379,7 +379,7 @@ const comuniToScaglioniIrpef = {
 //0,75	Applicabile a scaglione di reddito da euro 28.000,01 fino a euro 50.000,00
 //0,75	Applicabile a scaglione di reddito oltre euro 50.000,00
     'Mantova': {
-        22_000: 0,
+       // 22_000: 0,
         15_000: 0.0038,
         28_000: 0.0039,
         50_000: 0.0062,
@@ -399,7 +399,7 @@ const comuniToScaglioniIrpef = {
         1_000_000_000: 0.008,
     },
     'Pavia': {
-        16_000: 0,
+      //  16_000: 0,
         15_000: 0.007,
         28_000: 0.0077,
         55_000: 0.0078,        
@@ -630,7 +630,13 @@ const comuniToScaglioniIrpef = {
         10_000: 0,
         1_000_000_000: 0.002,
     },
-    'Pisa': undefined,
+    'Pisa': {
+        12_000: 0,
+        15_000: 0.005,
+        28_000: 0.006,
+        50_000: 0.007,
+        1_000_000_000: 0.008,
+    },
 //	Pisa; 0	Esenzione per i contribuenti in possesso di soli redditi da lavoro dipendente e/o da pensione fino a euro 14.000,00
 //0	Esenzione per gli altri contribuenti in possesso di redditi fino a euro 12.000,00
 //0,5	Applicabile a scaglione di reddito fino a euro 15.000,00
@@ -645,8 +651,6 @@ const comuniToScaglioniIrpef = {
         1_000_000_000: 0.005,
     },
     'Siena': undefined,
-//	
-
     'Bolzano': {
         1_000_000_000: 0,
     },
@@ -655,7 +659,7 @@ const comuniToScaglioniIrpef = {
     },
 
     'Perugia': {
-        12_500: 0,
+        // 12_500: 0,
         1_000_000_000: 0.008,
     }, // Esenzione per i contribuenti con reddito complessivo, ai sensi dell'art. 8 del D.P.R. n. 917/1986 (TUIR), inferiore/uguale ad euro 12.500,00
     'Terni': {
@@ -682,7 +686,7 @@ const comuniToScaglioniIrpef = {
         1_000_000_000: 0.008,
     },
     'Treviso': {
-    15_000: 0,
+   // 15_000: 0,
     15_000: 0.006,
     28_000: 0.0065,
     55_000: 0.007,
@@ -704,7 +708,7 @@ const comuniToScaglioniIrpef = {
         1_000_000_000: 0.008,
     },
     'Vicenza': {
-        15_000: 0,
+       // 15_000: 0,
         15_000: 0.006,
         28_000: 0.0065,
         50_000: 0.007,
