@@ -105,13 +105,42 @@ table, .carousel-inner {
     border-radius: 100%;
     background-color: #191970;
   }
+  .btn-outline-secondary.active {
+    color: #191970!important;
+    background-color: #deebf7!important;
+    border-color: #deebf7!important;
+    font-size: 13px!important;
+    padding: 4px 8px!important;
+}
+.btn-outline-secondary{    
+    font-size: 13px!important;
+    padding: 4px 8px!important;
+    border-color: #deebf7!important;    
+    color: #191970!important;
+}
+.btn-outline-secondary:hover {    
+    background-color: #deebf7!important;
+}
+.border-none {
+    border-color:transparent!important;
+}
+input {
+    display:none;
+}
+.fa-exclamation-circle {
+    color: crimson
+}
+.input-group-text {
+    background-color: #deebf7!important;
+}
+
 @media only screen and (max-width: 685px) {
     body {
       font-size: 14px!important;
     }
     table {
         max-width: 100%!important;
-    }
+    }  
     .mobile-hide {
         display: none;
     }
@@ -126,6 +155,12 @@ table, .carousel-inner {
     }
     table {
         max-width: 100%!important;
+    }
+    #warningComune {
+        text-align:left!important;
+    }
+    #customComune {
+        margin-left:0!important;
     }
     
   }

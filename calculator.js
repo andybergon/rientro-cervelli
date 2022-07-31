@@ -25,26 +25,26 @@ const findRegionByName = (regionString) => Object.keys(Regione).find(key => Regi
 const nomiRegioni = Object.keys(Regione).map(key => Regione[key]);
 
 const regioniToComuni = {
-    ABRUZZO: ['Chieti', "L'Aquila", 'Pescara', 'Teramo'],
-    BASILICATA: ['Matera', 'Potenza'],
+    ABRUZZO: ["L'Aquila", 'Chieti', 'Pescara', 'Teramo'],
+    BASILICATA: ['Potenza', 'Matera'],
     CALABRIA: ['Catanzaro', 'Cosenza', 'Crotone', 'Reggio Calabria', 'Vibo Valentia'],
-    CAMPANIA: ['Avellino', 'Benevento', 'Caserta', 'Napoli', 'Salerno'],
+    CAMPANIA: ['Napoli', 'Avellino', 'Benevento', 'Caserta', 'Salerno'],
     EMILIA_ROMAGNA: ['Bologna', 'Cesena', 'Ferrara', 'Forlì', 'Modena', 'Parma', 'Piacenza', 'Ravenna', 'Reggio Emilia', 'Rimini'],
-    FRIULI_VENEZIA_GIULIA: ['Gorizia', 'Pordenone', 'Trieste', 'Udine'],
-    LAZIO: ['Frosinone', 'Latina', 'Rieti', 'Roma', 'Viterbo'],
+    FRIULI_VENEZIA_GIULIA: ['Trieste', 'Gorizia', 'Pordenone', 'Udine'],
+    LAZIO: ['Roma', 'Frosinone', 'Latina', 'Rieti', 'Viterbo'],
     LIGURIA: ['Genova', 'Imperia', 'La Spezia', 'Savona'],
-    LOMBARDIA: ['Bergamo', 'Brescia', 'Como', 'Cremona', 'Lecco', 'Lodi', 'Mantova', 'Milano', 'Monza e Brianza', 'Pavia', 'Sondrio', 'Varese'],
+    LOMBARDIA: ['Milano', 'Bergamo', 'Brescia', 'Como', 'Cremona', 'Lecco', 'Lodi', 'Mantova', 'Monza e Brianza', 'Pavia', 'Sondrio', 'Varese'],
     MARCHE: ['Ancona', 'Ascoli Piceno', 'Fermo', 'Macerata', 'Pesaro e Urbino'],
     MOLISE: ['Campobasso', 'Isernia'],
-    PIEMONTE: ['Alessandria', 'Asti', 'Biella', 'Cuneo', 'Novara', 'Torino', 'Verbano-Cusio-Ossola', 'Vercelli'],
-    PUGLIA: ['Andria', 'Bari', 'Barletta', 'Brindisi', 'Lecce', 'Foggia', 'Taranto', 'Trani'],
+    PIEMONTE: ['Torino', 'Alessandria', 'Asti', 'Biella', 'Cuneo', 'Novara', 'Verbano-Cusio-Ossola', 'Vercelli'],
+    PUGLIA: ['Bari', 'Andria', 'Barletta', 'Brindisi', 'Lecce', 'Foggia', 'Taranto', 'Trani'],
     SARDEGNA: ['Cagliari', 'Nuoro', 'Oristano', 'Sassari', 'Sud Sardegna'],
-    SICILIA: ['Agrigento', 'Caltanissetta', 'Catania', 'Enna', 'Messina', 'Palermo', 'Ragusa', 'Siracusa', 'Trapani'],
-    TOSCANA: ['Arezzo', 'Carrara', 'Firenze', 'Grosseto', 'Livorno', 'Lucca', 'Massa', 'Pisa', 'Pistoia', 'Prato', 'Siena'],
-    TRENTINO_ALTO_ADIGE: ['Bolzano', 'Trento'],
+    SICILIA: ['Palermo', 'Agrigento', 'Caltanissetta', 'Catania', 'Enna', 'Messina', 'Ragusa', 'Siracusa', 'Trapani'],
+    TOSCANA: ['Firenze', 'Arezzo', 'Carrara', 'Grosseto', 'Livorno', 'Lucca', 'Massa', 'Pisa', 'Pistoia', 'Prato', 'Siena'],
+    TRENTINO_ALTO_ADIGE: ['Trento', 'Bolzano'],
     UMBRIA: ['Perugia', 'Terni'],
     VALLE_D_AOSTA: ["Aosta"],
-    VENETO: ['Belluno', 'Padova', 'Rovigo', 'Treviso', 'Venezia', 'Verona', 'Vicenza'],
+    VENETO: ['Venezia', 'Belluno', 'Padova', 'Rovigo', 'Treviso', 'Verona', 'Vicenza'],
 }
 
 const regioniToScaglioniIrpef = {

@@ -1,5 +1,6 @@
 function preRender() {    
 $("#imponibileInfo").tooltip();
+$("#comuneWarning").tooltip();
 addRegionToOptions(nomiRegioni);
 $('#region option[value="Lazio"]').attr("selected", "selected");
 addComuniToOptions(regioniToComuni);
@@ -10,7 +11,7 @@ addEditableRegionalIrpef(comuniToScaglioniIrpef);
         $("#body").show('slow');
         return false;
     });
-    $('#comune option[value="Roma"]').attr("selected", "selected");
+    //$('#comune option[value="Roma"]').attr("selected", "selected");
     $("#region").change(() => addComuniToOptions(regioniToComuni));
 }
 
@@ -19,15 +20,17 @@ function fillTables() {
     const regionName = $('#region').children("option:selected").text();
     const regione = findRegionByName(regionName);
     const comune = $('#comune').children("option:selected").text();
-    const comuneDef = $('#customComune').val();
-    console.log('Regione: %s - Comune: %s', regione, comune)
+    const comuneDef = {
+        1_000_000_000: $('#customComune').val()/100,
+    }
+    console.log('Regione: %s - Comune: %s - Comune Def: %s', regione, comune, comuneDef)
 
     const standardSalary = calcolaNetto(ral, regione, comune, false, comuneDef);
     const rientroSalary = calcolaNetto(ral, regione, comune, true, comuneDef);
     console.log('Std: %s - Rientro: %s', standardSalary, rientroSalary)
 
-    $('#nettoAnnualeS').text(Math.round(standardSalary));
-    $('#nettoAnnualeC').text(Math.round(rientroSalary));
+    $('#nettoAnnualeS').text(Math.round(standardSalary/mensilita));
+    $('#nettoAnnualeC').text(Math.round(rientroSalary/mensilita));
 
     const percentualeTasseS = (1 - standardSalary / ral) * 100;
     const percentualeTasseC = (1 - rientroSalary / ral) * 100;
@@ -51,58 +54,66 @@ function valueChanged() {
         $("#dopo5anni").hide("slow");
     }
 }
-
+ var mensilita = 1
+function getMensilita() {
+   mensilita = document.querySelector('input[name="mensilita"]:checked').value;
+  fillTables()  
+    $("#body").show('slow');
+}
 function fillTableTaxes(ral) {
-    $('#taxRalS').text(ral);
-    $('#taxRalC').text(ral);
+    $('#taxRalS').text(Math.round(ral/mensilita));
+    $('#taxRalC').text(Math.round(ral/mensilita));
     const regionName = $('#region').children("option:selected").text();
     const regione = findRegionByName(regionName);
     const comune = $('#comune').children("option:selected").text();
-    const comuneDef = $('#customComune').val();
+    const comuneDef = {
+        1_000_000_000: $('#customComune').val()/100,
+    }
+    console.log( $('#customComune').val()/100)
     const inps = calcolaInps(ral)
-    $('#taxInpsS').text(Math.round(inps));
-    $('#taxInpsC').text(Math.round(inps));
+    $('#taxInpsS').text(Math.round(inps/mensilita));
+    $('#taxInpsC').text(Math.round(inps/mensilita));
 
 
     const imponibileIrpefS = baseImponibile(ral, regione, false);
     const imponibileIrpefC = baseImponibile(ral, regione, true);
 
-    $('#imponibileIrpefS').text(Math.round(imponibileIrpefS));
-    $('#imponibileIrpefC').text(Math.round(imponibileIrpefC));
+    $('#imponibileIrpefS').text(Math.round(imponibileIrpefS/mensilita));
+    $('#imponibileIrpefC').text(Math.round(imponibileIrpefC/mensilita));
     const percentualeImponibile = regioneToRegola[regione] === 0.1 ? "90%" : "70%";
     $('#percentualeImponibile').text(percentualeImponibile);
 
     const standardIrpef = calcolaIrpef(imponibileIrpefS);
     const rientroIrpef = calcolaIrpef(imponibileIrpefC);
-    $('#taxIrpefS').text(Math.round(standardIrpef));
-    $('#taxIrpefC').text(Math.round(rientroIrpef));
-    $('#TotIrpefS').text(Math.round(standardIrpef));
-    $('#TotIrpefC').text(Math.round(rientroIrpef));
+    $('#taxIrpefS').text(Math.round(standardIrpef/mensilita));
+    $('#taxIrpefC').text(Math.round(rientroIrpef/mensilita));
+    $('#TotIrpefS').text(Math.round(standardIrpef/mensilita));
+    $('#TotIrpefC').text(Math.round(rientroIrpef/mensilita));
 
     const standardIrpefRegione = calcolaIrpefRegione(imponibileIrpefS, regione);
     const rientroIrpefRegione = calcolaIrpefRegione(imponibileIrpefC, regione);
-    $('#taxRegioneS').text(Math.round(standardIrpefRegione));
-    $('#taxRegioneC').text(Math.round(rientroIrpefRegione));
+    $('#taxRegioneS').text(Math.round(standardIrpefRegione/mensilita));
+    $('#taxRegioneC').text(Math.round(rientroIrpefRegione/mensilita));
 
     const standardiIrpefComune = calcolaIrpefComune(imponibileIrpefS, comune, comuneDef);
     const rientroIrpefComune = calcolaIrpefComune(imponibileIrpefC, comune, comuneDef);
-    $('#taxComuneS').text(Math.round(standardiIrpefComune));
-    $('#taxComuneC').text(Math.round(rientroIrpefComune));
+    $('#taxComuneS').text(Math.round(standardiIrpefComune/mensilita));
+    $('#taxComuneC').text(Math.round(rientroIrpefComune/mensilita));
 
     const irpefTotS = standardIrpef + standardIrpefRegione + standardiIrpefComune;
     const irpefTotC = rientroIrpef + rientroIrpefRegione + rientroIrpefComune;
-    $('#irpefTotS').text(Math.round(irpefTotS));
-    $('#irpefTotC').text(Math.round(irpefTotC));
+    $('#irpefTotS').text(Math.round(irpefTotS/mensilita));
+    $('#irpefTotC').text(Math.round(irpefTotC/mensilita));
 
     const detrazioniTotS = calcolaDetrazioni(imponibileIrpefS);
     const detrazioniTotC = calcolaDetrazioni(imponibileIrpefC);
-    $('#detrazioniTotS').text(Math.round(detrazioniTotS));
-    $('#detrazioniTotC').text(Math.round(detrazioniTotC));
+    $('#detrazioniTotS').text(Math.round(detrazioniTotS/mensilita));
+    $('#detrazioniTotC').text(Math.round(detrazioniTotC/mensilita));
 
     const irpefNettoS = calcolaIrpefNetto(irpefTotS, detrazioniTotS);
     const irpefNettoC = calcolaIrpefNetto(irpefTotC, detrazioniTotC);
-    $('#irpefNettoS').text(Math.round(irpefNettoS));
-    $('#irpefNettoC').text(Math.round(irpefNettoC));
+    $('#irpefNettoS').text(Math.round(irpefNettoS/mensilita));
+    $('#irpefNettoC').text(Math.round(irpefNettoC/mensilita));
 
     const biCArr = findScaglioniIrpef(imponibileIrpefC, soglieIrpefToPercentualeMarginale);
     const biSArr = findScaglioniIrpef(imponibileIrpefS, soglieIrpefToPercentualeMarginale);
@@ -134,7 +145,8 @@ function addRegionToOptions(regioni) {
 }
 
 function addComuniToOptions(regioniToComuni) {    
-        $('#comune').html('<option disabled selected>Comune</option>');
+      //  $('#comune').html('<option disabled selected>Comune</option>');
+        $('#comune').html('');
         const selectedRegion = $('#region').children("option:selected").val()
 
         for (const comune of regioniToComuni[findRegionByName(selectedRegion)]) {
@@ -143,13 +155,16 @@ function addComuniToOptions(regioniToComuni) {
                 text: comune
             }));
         }
+        $("#comune:first-child").attr("selected", true);        
+        fillTables();  
+        $("#body").show('slow');
 }
 
 
 function addEditableRegionalIrpef(comuniToScaglioniIrpef) {
     $("#comune").change(() => {
-        const selectedComune = $('#comune').children("option:selected").val();
-        if (comuniToScaglioniIrpef.selectedComune == undefined) {
+        const selectedComune = $('#comune').find(":selected").val();
+        if (comuniToScaglioniIrpef[selectedComune] == undefined) {
             $('#warningComune').show()
         } else {
             $('#warningComune').hide();
