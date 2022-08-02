@@ -33,6 +33,14 @@
 
     <script src="cervelli.js"></script>
     <script src="calculator.js"></script>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-70BY0Z842Y"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-70BY0Z842Y');
+    </script>
 </head>
 
 <body>
@@ -59,18 +67,18 @@
                 </select>
             </div>
 
-            
-        <div class="input-group" id="warningComune" style="display:none; text-align:right;max-width: 685px;">         
-            <input type="number" placeholder="0.9" min="0" max="1" step="0.001" id="customComune" 
-            class="form-control form-control-sm" style="width:70px; display:inline-block!important; margin-left: auto; flex:none" value="0.9">                      
+
+        <div class="input-group" id="warningComune" style="display:none; text-align:right;max-width: 685px;">
+            <input type="number" placeholder="0.9" min="0" max="1" step="0.001" id="customComune"
+            class="form-control form-control-sm" style="width:70px; display:inline-block!important; margin-left: auto; flex:none" value="0.9">
             <div class="input-group-append">
                 <span class="input-group-text">%</span>
             </div>
-            <button id="comuneWarning" type="button" class="btn" data-bs-toggle="tooltip" data-bs-placement="top" 
+            <button id="comuneWarning" type="button" class="btn" data-bs-toggle="tooltip" data-bs-placement="top"
                 title="Nessuna informazione per questo comune. Inserisci coefficiente Irpef comunale o lascia il nostro valore di default (0.9%).">
                 <i class="fas fa-exclamation-circle"></i>
             </button>
-        </div>        
+        </div>
         </form>
     </div>
 </div>
@@ -203,16 +211,16 @@
             </table>
 
         </div>
-        
+
         <table class="table" id="tax">
-            <thead>           
+            <thead>
             <tr>
                 <td scope="col" colspan="3" style="text-align:center">
-                <div class="btn-group-toggle" data-toggle="buttons">  
+                <div class="btn-group-toggle" data-toggle="buttons">
                     <label class="btn btn-outline-secondary btn-sm active" autocomplete="off" ><input type="radio" name="mensilita" id="option1" value="1" autocomplete="off" checked onclick="getMensilita()"> Anno</label>
                     <label class="btn btn-outline-secondary  btn-sm" autocomplete="off" ><input type="radio" name="mensilita" id="option2" value="12" autocomplete="off" onclick="getMensilita()">12 mesi</label>
                     <label class="btn btn-outline-secondary  btn-sm" autocomplete="off" ><input type="radio" name="mensilita" id="option3" value="13" autocomplete="off" onclick="getMensilita()">13 mesi</label>
-                    <label class="btn btn-outline-secondary  btn-sm" autocomplete="off" ><input type="radio" name="mensilita" id="option4" value="14" autocomplete="off" onclick="getMensilita()">14 mesi</label>                    
+                    <label class="btn btn-outline-secondary  btn-sm" autocomplete="off" ><input type="radio" name="mensilita" id="option4" value="14" autocomplete="off" onclick="getMensilita()">14 mesi</label>
                     </div>
                 </td>
                 </tr>
