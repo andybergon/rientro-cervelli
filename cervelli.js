@@ -180,15 +180,17 @@ function addEditableRegionalIrpef(comuniToScaglioniIrpef) {
 function findScaglioniIrpef(bi, soglieToPercentualeMarginale) {
     let tasseTotale = 0;
     let resto = bi;
-    const sogliaPrecedente = 0;
+    let sogliaPrecedente = 0;
     const scaglioniIrpef = [];
     for (const soglia in soglieToPercentualeMarginale) {
         const percentuale = soglieToPercentualeMarginale[soglia]
         const deltaSoglia = soglia - sogliaPrecedente;
         const used = Math.min(deltaSoglia, resto);
+        sogliaPrecedente = soglia;
         resto -= used;
-        tasseTotale += used * percentuale;
-        scaglioniIrpef.push(used * percentuale);
+        let taxInSoglia = used * percentuale;
+        tasseTotale += taxInSoglia;
+        scaglioniIrpef.push(taxInSoglia);
     }
     return scaglioniIrpef;
 }
