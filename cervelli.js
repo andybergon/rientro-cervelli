@@ -23,11 +23,9 @@ function fillTables() {
     const comuneDef = {
         1_000_000_000: $('#customComune').val()/100,
     }
-    console.log('Regione: %s - Comune: %s - Comune Def: %s', regione, comune, comuneDef)
 
     const standardSalary = calcolaNetto(ral, regione, comune, false, comuneDef);
     const rientroSalary = calcolaNetto(ral, regione, comune, true, comuneDef);
-    console.log('Std: %s - Rientro: %s', standardSalary, rientroSalary)
 
     $('#nettoAnnualeS').text(Math.round(standardSalary/mensilita));
     $('#nettoAnnualeC').text(Math.round(rientroSalary/mensilita));
@@ -69,7 +67,6 @@ function fillTableTaxes(ral) {
     const comuneDef = {
         1_000_000_000: $('#customComune').val()/100,
     }
-    console.log( $('#customComune').val()/100)
     const inps = calcolaInps(ral)
     $('#taxInpsS').text(Math.round(inps/mensilita));
     $('#taxInpsC').text(Math.round(inps/mensilita));
@@ -87,8 +84,8 @@ function fillTableTaxes(ral) {
     const rientroIrpef = calcolaIrpef(imponibileIrpefC);
     $('#taxIrpefS').text(Math.round(standardIrpef/mensilita));
     $('#taxIrpefC').text(Math.round(rientroIrpef/mensilita));
-    $('#TotIrpefS').text(Math.round(standardIrpef/mensilita));
-    $('#TotIrpefC').text(Math.round(rientroIrpef/mensilita));
+    $('#TotIrpefS').text(Math.round(standardIrpef));
+    $('#TotIrpefC').text(Math.round(rientroIrpef));
 
     const standardIrpefRegione = calcolaIrpefRegione(imponibileIrpefS, regione);
     const rientroIrpefRegione = calcolaIrpefRegione(imponibileIrpefC, regione);
